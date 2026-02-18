@@ -1177,7 +1177,7 @@ fn compute_conv2d_grad<B: Backend>(
     let col_cols = h_out * w_out;
     let sample_size = c_in * h * w;
 
-    //  grad_weight: sum over batch of grad_out × columns^T 
+    //  grad_weight: sum over batch of grad_out × columns^T
     // grad_out for sample: [c_out, h_out*w_out]
     // columns for sample:  [col_rows, col_cols]
     // grad_weight = grad_out × columns^T → [c_out, col_rows]
@@ -1223,7 +1223,7 @@ fn compute_conv2d_grad<B: Backend>(
     )?;
     grads.accumulate(weight.id(), grad_weight_t)?;
 
-    //  grad_input: weight^T × grad_out, then col2im 
+    //  grad_input: weight^T × grad_out, then col2im
     // weight: [c_out, col_rows]
     // grad_out: [c_out, col_cols]
     // columns = weight^T × grad_out → [col_rows, col_cols]
@@ -1273,7 +1273,7 @@ fn compute_conv2d_grad<B: Backend>(
     )?;
     grads.accumulate(input.id(), grad_input_t)?;
 
-    //  grad_bias 
+    //  grad_bias
     if let Some(b) = bias {
         let mut grad_b = vec![0.0f64; c_out];
         for ni in 0..n_batch {
@@ -1416,7 +1416,7 @@ fn compute_conv1d_grad<B: Backend>(
     let sample_size = c_in * l;
     let mut columns = vec![0.0f64; col_rows * col_cols];
 
-    //  grad_weight: sum over batch of grad_out × columns^T 
+    //  grad_weight: sum over batch of grad_out × columns^T
     let mut grad_w = vec![0.0f64; c_out * col_rows];
     for ni in 0..n {
         let in_offset = ni * sample_size;
@@ -1454,7 +1454,7 @@ fn compute_conv1d_grad<B: Backend>(
     )?;
     grads.accumulate(weight.id(), grad_weight_t)?;
 
-    //  grad_input: weight^T × grad_out, then col2im 
+    //  grad_input: weight^T × grad_out, then col2im
     let mut grad_in = vec![0.0f64; n * sample_size];
     for ni in 0..n {
         for v in columns.iter_mut() {
@@ -1495,7 +1495,7 @@ fn compute_conv1d_grad<B: Backend>(
     )?;
     grads.accumulate(input.id(), grad_input_t)?;
 
-    //  grad_bias 
+    //  grad_bias
     if let Some(b) = bias {
         let mut grad_b = vec![0.0f64; c_out];
         for ni in 0..n {

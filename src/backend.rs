@@ -114,7 +114,7 @@ pub trait Backend: Clone + Send + Sync + fmt::Debug + 'static {
     /// The storage type for this backend.
     type Storage: BackendStorage;
 
-    //  Creation 
+    //  Creation
 
     /// Allocate storage filled with zeros.
     fn zeros(shape: &Shape, dtype: DType, device: &Self::Device) -> Result<Self::Storage>;
@@ -134,7 +134,7 @@ pub trait Backend: Clone + Send + Sync + fmt::Debug + 'static {
     /// Create storage with random normal values (mean=0, std=1).
     fn rand_normal(shape: &Shape, dtype: DType, device: &Self::Device) -> Result<Self::Storage>;
 
-    //  Element-wise binary ops 
+    //  Element-wise binary ops
 
     /// Apply a binary op element-wise: result[i] = op(lhs[i], rhs[i]).
     /// The layouts handle broadcasting and non-contiguous access.
@@ -146,12 +146,12 @@ pub trait Backend: Clone + Send + Sync + fmt::Debug + 'static {
         rhs_layout: &Layout,
     ) -> Result<Self::Storage>;
 
-    //  Element-wise unary ops 
+    //  Element-wise unary ops
 
     /// Apply a unary op element-wise: result[i] = op(input[i]).
     fn unary_op(op: UnaryOp, input: &Self::Storage, layout: &Layout) -> Result<Self::Storage>;
 
-    //  Reductions 
+    //  Reductions
 
     /// Reduce along specific dimensions.
     /// If `dims` is empty, reduce over all elements.
@@ -163,7 +163,7 @@ pub trait Backend: Clone + Send + Sync + fmt::Debug + 'static {
         keep_dim: bool,
     ) -> Result<Self::Storage>;
 
-    //  Matrix multiplication 
+    //  Matrix multiplication
 
     /// General matrix multiply: C = A @ B.
     /// Supports batched matmul for tensors with rank > 2.
@@ -174,7 +174,7 @@ pub trait Backend: Clone + Send + Sync + fmt::Debug + 'static {
         rhs_layout: &Layout,
     ) -> Result<Self::Storage>;
 
-    //  Data movement 
+    //  Data movement
 
     /// Make a contiguous copy of the storage following the given layout.
     /// If the layout is already contiguous, this may just clone the storage.
@@ -183,7 +183,7 @@ pub trait Backend: Clone + Send + Sync + fmt::Debug + 'static {
     /// Copy data from this storage to a Vec<f64> on the host (for inspection).
     fn to_f64_vec(input: &Self::Storage, layout: &Layout) -> Result<Vec<f64>>;
 
-    //  Comparison ops 
+    //  Comparison ops
 
     /// Element-wise comparison, returns a u8 storage (0 or 1).
     fn cmp_op(
@@ -194,13 +194,13 @@ pub trait Backend: Clone + Send + Sync + fmt::Debug + 'static {
         rhs_layout: &Layout,
     ) -> Result<Self::Storage>;
 
-    //  Affine / fused ops (optional but useful) 
+    //  Affine / fused ops (optional but useful)
 
     /// Affine transform: result = input * mul + add.
     /// Used for normalization and other fused operations.
     fn affine(input: &Self::Storage, layout: &Layout, mul: f64, add: f64) -> Result<Self::Storage>;
 
-    //  Indexing 
+    //  Indexing
 
     /// Gather elements along a dimension using index tensor.
     fn index_select(
@@ -211,17 +211,17 @@ pub trait Backend: Clone + Send + Sync + fmt::Debug + 'static {
         dim: usize,
     ) -> Result<Self::Storage>;
 
-    //  Powf 
+    //  Powf
 
     /// Element-wise power: result[i] = input[i] ^ exponent.
     fn powf(input: &Self::Storage, layout: &Layout, exponent: f64) -> Result<Self::Storage>;
 
-    //  Clamp 
+    //  Clamp
 
     /// Element-wise clamp: result[i] = clamp(input[i], min, max).
     fn clamp(input: &Self::Storage, layout: &Layout, min: f64, max: f64) -> Result<Self::Storage>;
 
-    //  Where / conditional select 
+    //  Where / conditional select
 
     /// Element-wise conditional: result[i] = if mask[i] != 0 { on_true[i] } else { on_false[i] }.
     fn where_cond(
@@ -233,7 +233,7 @@ pub trait Backend: Clone + Send + Sync + fmt::Debug + 'static {
         on_false_layout: &Layout,
     ) -> Result<Self::Storage>;
 
-    //  Gather 
+    //  Gather
 
     /// Gather elements along `dim` using `index` tensor.
     ///
@@ -250,7 +250,7 @@ pub trait Backend: Clone + Send + Sync + fmt::Debug + 'static {
         dim: usize,
     ) -> Result<Self::Storage>;
 
-    //  Concatenation 
+    //  Concatenation
 
     /// Concatenate multiple storages along `dim` into a single contiguous storage.
     /// Each entry is (storage, layout) so non-contiguous inputs are handled correctly.
@@ -261,7 +261,7 @@ pub trait Backend: Clone + Send + Sync + fmt::Debug + 'static {
         dim: usize,
     ) -> Result<Self::Storage>;
 
-    //  Dtype conversion 
+    //  Dtype conversion
 
     /// Cast storage to a different dtype on-device (no host round-trip).
     ///
