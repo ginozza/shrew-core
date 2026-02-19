@@ -969,7 +969,7 @@ impl<B: Backend> Tensor<B> {
         ))
     }
 
-    /// Conditional select: result[i] = if mask[i] != 0 { on_true[i] } else { on_false[i] }.
+    /// Conditional select: `result[i] = if mask[i] != 0 { on_true[i] } else { on_false[i] }`.
     ///
     /// `mask` is typically a U8 tensor from comparison ops.
     /// `on_true` and `on_false` must have the same shape and dtype.
@@ -1513,7 +1513,7 @@ impl<B: Backend> Tensor<B> {
     /// Stack tensors along a new dimension.
     ///
     /// All tensors must have the same shape. Inserts a new dimension at `dim`.
-    /// `stack([a, b], dim=0)` where a,b are shape [2,3] → [2, 2, 3].
+    /// `stack([a, b], dim=0)` where a,b are shape `[2,3]` → `[2, 2, 3]`.
     pub fn stack(tensors: &[Self], dim: usize) -> Result<Self> {
         if tensors.is_empty() {
             return Err(Error::msg("stack: empty tensor list"));
@@ -2123,7 +2123,7 @@ impl<B: Backend> Tensor<B> {
 
     // Affine transform
 
-    /// Affine transform: result[i] = self[i] * mul + add.
+    /// Affine transform: `result[i] = self[i] * mul + add`.
     /// Useful for normalization and scaling.
     pub fn affine(&self, mul: f64, add: f64) -> Result<Self> {
         let storage = self.read_storage()?;
@@ -2145,7 +2145,7 @@ impl<B: Backend> Tensor<B> {
 
     // Data extraction (for testing and debugging)
 
-    /// Extract all elements as a flat Vec<f64>.
+    /// Extract all elements as a flat `Vec<f64>`.
     pub fn to_f64_vec(&self) -> Result<Vec<f64>> {
         let storage = self.read_storage()?;
         B::to_f64_vec(&storage, &self.inner.layout)

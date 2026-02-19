@@ -77,10 +77,10 @@ impl Shape {
     ///   3. Missing leading dimensions are treated as 1.
     ///
     /// Examples:
-    ///   [3, 4] and [4]     → [3, 4]   (expand [4] to [1, 4] then broadcast dim 0)
-    ///   [2, 1] and [1, 3]  → [2, 3]
-    ///   [5, 3, 1] and [3, 4] → [5, 3, 4]
-    ///   [3] and [4]        → Error (3 ≠ 4 and neither is 1)
+    ///   `[3, 4]` and `[4]`     → `[3, 4]`   (expand `[4]` to `[1, 4]` then broadcast dim 0)
+    ///   `[2, 1]` and `[1, 3]`  → `[2, 3]`
+    ///   `[5, 3, 1]` and `[3, 4]` → `[5, 3, 4]`
+    ///   `[3]` and `[4]`        → Error (3 ≠ 4 and neither is 1)
     pub fn broadcast_shape(lhs: &Shape, rhs: &Shape) -> crate::Result<Shape> {
         let l = lhs.dims();
         let r = rhs.dims();
@@ -112,7 +112,7 @@ impl Shape {
 
     /// Return the broadcast strides for this shape to match a target broadcast shape.
     ///
-    /// For each dimension where self.dim[i] == 1 and target.dim[i] > 1,
+    /// For each dimension where `self.dim[i] == 1` and `target.dim[i] > 1`,
     /// the stride is set to 0 (repeating the single element).
     /// For missing leading dimensions (self has fewer dims), stride is also 0.
     pub fn broadcast_strides(&self, target: &Shape) -> Vec<usize> {

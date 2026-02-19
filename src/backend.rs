@@ -136,7 +136,7 @@ pub trait Backend: Clone + Send + Sync + fmt::Debug + 'static {
 
     //  Element-wise binary ops
 
-    /// Apply a binary op element-wise: result[i] = op(lhs[i], rhs[i]).
+    /// Apply a binary op element-wise: `result[i] = op(lhs[i], rhs[i])`.
     /// The layouts handle broadcasting and non-contiguous access.
     fn binary_op(
         op: BinaryOp,
@@ -148,7 +148,7 @@ pub trait Backend: Clone + Send + Sync + fmt::Debug + 'static {
 
     //  Element-wise unary ops
 
-    /// Apply a unary op element-wise: result[i] = op(input[i]).
+    /// Apply a unary op element-wise: `result[i] = op(input[i])`.
     fn unary_op(op: UnaryOp, input: &Self::Storage, layout: &Layout) -> Result<Self::Storage>;
 
     //  Reductions
@@ -180,7 +180,7 @@ pub trait Backend: Clone + Send + Sync + fmt::Debug + 'static {
     /// If the layout is already contiguous, this may just clone the storage.
     fn to_contiguous(input: &Self::Storage, layout: &Layout) -> Result<Self::Storage>;
 
-    /// Copy data from this storage to a Vec<f64> on the host (for inspection).
+    /// Copy data from this storage to a `Vec<f64>` on the host (for inspection).
     fn to_f64_vec(input: &Self::Storage, layout: &Layout) -> Result<Vec<f64>>;
 
     //  Comparison ops
@@ -213,17 +213,17 @@ pub trait Backend: Clone + Send + Sync + fmt::Debug + 'static {
 
     //  Powf
 
-    /// Element-wise power: result[i] = input[i] ^ exponent.
+    /// Element-wise power: `result[i] = input[i] ^ exponent`.
     fn powf(input: &Self::Storage, layout: &Layout, exponent: f64) -> Result<Self::Storage>;
 
     //  Clamp
 
-    /// Element-wise clamp: result[i] = clamp(input[i], min, max).
+    /// Element-wise clamp: `result[i] = clamp(input[i], min, max)`.
     fn clamp(input: &Self::Storage, layout: &Layout, min: f64, max: f64) -> Result<Self::Storage>;
 
     //  Where / conditional select
 
-    /// Element-wise conditional: result[i] = if mask[i] != 0 { on_true[i] } else { on_false[i] }.
+    /// Element-wise conditional: `result[i] = if mask[i] != 0 { on_true[i] } else { on_false[i] }`.
     fn where_cond(
         mask: &Self::Storage,
         mask_layout: &Layout,

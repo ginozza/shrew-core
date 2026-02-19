@@ -57,7 +57,7 @@ impl TensorId {
 /// plus the operation parameters. backward() uses these to compute gradients
 /// via the chain rule.
 ///
-/// Op<B> is generic over the Backend because it stores Tensor<B>.
+/// `Op<B>` is generic over the Backend because it stores `Tensor<B>`.
 pub enum Op<B: Backend> {
     /// No operation — this is a leaf tensor (input data or trainable parameter).
     None,
@@ -167,7 +167,7 @@ pub enum Op<B: Backend> {
         max: f64,
     },
 
-    /// Conditional select: result[i] = if mask[i] { on_true[i] } else { on_false[i] }.
+    /// Conditional select: `result[i] = if mask[i] { on_true[i] } else { on_false[i] }`.
     WhereCond {
         mask: crate::Tensor<B>,
         on_true: crate::Tensor<B>,

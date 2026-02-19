@@ -113,7 +113,7 @@ impl Layout {
     /// into the same storage with adjusted shape and offset.
     ///
     /// Example: tensor of shape [4, 6], narrow(dim=1, start=2, len=3)
-    /// → shape [4, 3], offset += 2 * stride[1]
+    /// → shape `[4, 3]`, offset += 2 * `stride[1]`
     pub fn narrow(&self, dim: usize, start: usize, len: usize) -> Result<Layout> {
         let rank = self.rank();
         if dim >= rank {
@@ -139,7 +139,7 @@ impl Layout {
     }
 
     /// Compute the flat index into storage for a given multi-dimensional index.
-    /// This is the core formula: flat_index = offset + sum(index[i] * stride[i])
+    /// This is the core formula: flat_index = offset + sum(`index[i]` * `stride[i]`)
     pub fn flat_index(&self, index: &[usize]) -> usize {
         let mut flat = self.offset;
         for (i, &idx) in index.iter().enumerate() {

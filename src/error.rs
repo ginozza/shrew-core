@@ -7,7 +7,7 @@ use crate::shape::Shape;
 /// Using a single error type across the library simplifies error propagation.
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
-    /// Shape mismatch between two tensors (e.g., trying to add [2,3] + [4,5]).
+    /// Shape mismatch between two tensors (e.g., trying to add `[2,3]` + `[4,5]`).
     #[error("shape mismatch: expected {expected}, got {got}")]
     ShapeMismatch { expected: Shape, got: Shape },
 
